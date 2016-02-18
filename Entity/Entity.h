@@ -1,26 +1,32 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include "../level/Level.hpp"
 
 using namespace sf;
 
-class Entity
+class Entity : public Drawable
 {
 public:
 					Entity();
 	virtual			~Entity();
-	//void			drawTheEntity(Texture textureForEntity, Sprite spriteForEntity); // ¬ариант –услана
-	void			drawEntity(Image &image, int rectX, int rectY);
+
+	//virtual void	Draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	void			drawEntity(Image &image, int rectstartX, int rectstartY, int rectX, int rectY);
+	void			createHitBox(float widht, float height);
+	void			setHitBoxPosition(float posX, float posY);
+	Vector2f		getHitBoxPosition();
+	FloatRect		getHitBoxRect();
 	
-	Sprite			sprite;//—делал не приватным, чтобы избавитьс€ от костыльного метода drawHero(), по крайней мере пока не анимации
+	
+	std::vector		<lv::Object> obj;
+	//Sprite			sprite;//—делал не приватным, чтобы избавитьс€ от костыльного метода drawHero(), по крайней мере пока не анимации
 protected:
-	//int			coordinateX; //Ћучше использовать тип Vector2f, он имеет обе оси координат в одной переменной(pos.x, pos.y)
-	//int			coordinateY;
-	//int			hitpoints; //ѕока составл€юща€геймпле€ не дошла до дамага, так что закомментил, можно даже пока удалить
-	//int			armor;
-	Vector2f		_posCoordinate;
+	virtual void draw(sf::RenderTarget&, sf::RenderStates) const; //чтобы не использовать костыли вроде hero.drawHero(hero._sprite), наследуемс€от Drawable и рисуем все наследованные от entity классы так: window.draw(hero)
+	Vector2f		_posCoord;
 	Vector2f		_direction;//направление движени€ игрока
+	float			_widht, _height;
 	float			_speed;
 	bool			_onGround;	
 	Texture			_texture;
-	//Sprite		_sprite;
+	Sprite		_sprite;
 };
