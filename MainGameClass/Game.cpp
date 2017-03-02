@@ -10,3 +10,8 @@ Game::Game()
 Game::~Game()
 {
 }
+
+Hack::Haching()
+{
+  return -1;
+}
